@@ -7,8 +7,11 @@ import LandingWelcome from '@/common/components/landing-welcome';
 export default function HomePage() {
   return (
     <main className="flex min-h-screen gap-12 items-center justify-center p-24">
-      <div className="flex flex-col items-center gap-12 w-[55rem]">
-        <LandingWelcome />
+      <div className="flex flex-col gap-12 w-[55rem]">
+        <h1 className="text-8xl">
+          Detect deepfakes with
+          <LandingWelcome />
+        </h1>
         <h2 className="text-2xl">
           Deepfake detector built with Next.js, NextUI, and TensorFlow. Upload a
           photo, let the AI do its magic, and see if it is a deepfake! Stop the
@@ -35,10 +38,11 @@ export default function HomePage() {
         </div>
       </div>
       <Image
-        src="/landing1.webp"
-        alt="deepfake-detector-landing"
+        priority
         width={600}
         height={600}
+        src="/landing1.webp"
+        alt="deepfake-detector-landing"
         className="rounded-xl drop-shadow-xl"
       />
     </main>
