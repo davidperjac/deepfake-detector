@@ -1,7 +1,12 @@
 from typing import Union
 
-from fastapi import FastAPI, Form, UploadFile
+from fastapi import FastAPI, Form, File, UploadFile
+from tensorflow.keras.models import load_model
 from fastapi.middleware.cors import CORSMiddleware
+from PIL import Image
+
+import tensorflow as tf
+import numpy as np
 
 app = FastAPI()
 
@@ -17,9 +22,26 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+  # load model
+  model = load_model('model.tf')
+
+  # check model info
+  print(model.summary())
+
+  return {"Hello": "World"}
 
 @app.post("/detect")
-async def detect_deepfake(file: UploadFile = Form(...)):
-    print(file)
-    return { "file": file }
+async def detect_deepfake(file: UploadFile = File(...)):
+  im = Image.open(file.file)
+
+  input_arr = tf.keras.utils.img_to_array(im)
+
+  input_arr = np.array([input_arr])
+
+  model = load_model('model.tf')
+
+  prediction = model.predict(input_arr)
+
+  prediction_list = prediction.tolist()
+
+  return { "file": file, "prediction": prediction_list }
