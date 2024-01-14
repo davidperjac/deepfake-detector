@@ -20,12 +20,6 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-  # load model
-  model = load_model('model.tf')
-
-  # check model info
-  print(model.summary())
-
   return {"Hello": "World"}
 
 @app.post("/detect")
