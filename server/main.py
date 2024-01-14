@@ -1,5 +1,3 @@
-from typing import Union
-
 from PIL import Image
 from tensorflow.keras.models import load_model
 from fastapi.middleware.cors import CORSMiddleware
