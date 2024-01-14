@@ -9,6 +9,7 @@ import { Response } from '@/types/response';
 import ResponseModal from '@/common/components/response-modal';
 import { TrashIcon, UploadIcon, WarningIcon } from '@/common/icons';
 
+import { getDetection } from '@/services/detection';
 import { useImageDropzone } from '@/hooks/useImageDropzone';
 
 export default function ImageDropzone() {
@@ -26,16 +27,9 @@ export default function ImageDropzone() {
     try {
       if (!file) return;
 
-      const formData = new FormData();
-      formData.append('file', file);
+      const response = await getDetection(file);
 
-      const URL = String(process.env.NEXT_PUBLIC_BASE_URL);
-      const data = await fetch(URL, {
-        method: 'POST',
-        body: formData,
-      }).then((res) => res.json());
-
-      setResponse(data);
+      setResponse(response);
     } catch (error) {
       console.error(error);
     }

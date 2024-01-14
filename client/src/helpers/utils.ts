@@ -1,6 +1,6 @@
-const getPredictionFromResponse = (
+export default function getPredictionFromResponse(
   prediction: number[][] | undefined
-): string => {
+): string {
   if (!prediction) {
     return 'No prediction';
   }
@@ -14,6 +14,4 @@ const getPredictionFromResponse = (
   };
 
   return labelClasses[index];
-};
-
-export default getPredictionFromResponse;
+}
