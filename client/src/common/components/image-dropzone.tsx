@@ -11,6 +11,7 @@ import { useImageDropzone } from '@/hooks/useImageDropzone';
 
 export default function ImageDropzone() {
   const [response, setResponse] = useState<Response>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isImageDetected, setIsImageDetected] = useState<boolean>(false);
 
   const { file, fileRejectionItems, onRemove, getRootProps, getInputProps } =
@@ -18,6 +19,8 @@ export default function ImageDropzone() {
 
   const handleSubmit = async () => {
     if (!file) return;
+    setIsImageDetected(true);
+    setIsLoading(true);
 
     const formData = new FormData();
     formData.append('file', file);
@@ -28,7 +31,7 @@ export default function ImageDropzone() {
       body: formData,
     }).then((res) => res.json());
 
-    setIsImageDetected(true);
+    setIsLoading(false);
     setResponse(data);
   };
 
@@ -37,6 +40,7 @@ export default function ImageDropzone() {
       <ResponseModal
         file={file}
         response={response}
+        isLoading={isLoading}
         isOpen={isImageDetected}
         onOpenChange={() => setIsImageDetected(false)}
       />

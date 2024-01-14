@@ -14,6 +14,7 @@ import { usePathname } from 'next/navigation';
 
 import { FaceIcon, GithubIcon } from '@/common/icons';
 import { DeepfakeContext, NAVIGATION_ITEMS } from '@/helpers';
+import ThemeSwitcher from '@/common/components/theme-switcher';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -68,6 +69,9 @@ export default function Navigation() {
           >
             <GithubIcon />
           </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <ThemeSwitcher />
         </NavbarItem>
       </NavbarContent>
     </Navbar>

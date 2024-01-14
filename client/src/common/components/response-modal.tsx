@@ -13,6 +13,7 @@ import getPredictionFromResponse from '@/helpers/utils';
 
 type ResponseModalProps = {
   isOpen: boolean;
+  isLoading: boolean;
   file: File | undefined;
   onOpenChange: () => void;
   response: Response | undefined;
@@ -22,6 +23,7 @@ export default function ResponseModal({
   file,
   isOpen,
   response,
+  isLoading,
   onOpenChange,
 }: ResponseModalProps) {
   return (
@@ -32,7 +34,7 @@ export default function ResponseModal({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader>Your Prediction!</ModalHeader>
+            <ModalHeader>Our Prediction</ModalHeader>
             <ModalBody className="flex flex-row items-center">
               <Image
                 width={128}
