@@ -5,8 +5,10 @@ import { useState } from 'react';
 import { Button } from '@nextui-org/react';
 
 import { Response } from '@/types/response';
+
 import ResponseModal from '@/common/components/response-modal';
 import { TrashIcon, UploadIcon, WarningIcon } from '@/common/icons';
+
 import { useImageDropzone } from '@/hooks/useImageDropzone';
 
 export default function ImageDropzone() {
@@ -18,21 +20,26 @@ export default function ImageDropzone() {
     useImageDropzone();
 
   const handleSubmit = async () => {
-    if (!file) return;
     setIsImageDetected(true);
     setIsLoading(true);
 
-    const formData = new FormData();
-    formData.append('file', file);
+    try {
+      if (!file) return;
 
-    const URL = String(process.env.NEXT_PUBLIC_BASE_URL);
-    const data = await fetch(URL, {
-      method: 'POST',
-      body: formData,
-    }).then((res) => res.json());
+      const formData = new FormData();
+      formData.append('file', file);
 
+      const URL = String(process.env.NEXT_PUBLIC_BASE_URL);
+      const data = await fetch(URL, {
+        method: 'POST',
+        body: formData,
+      }).then((res) => res.json());
+
+      setResponse(data);
+    } catch (error) {
+      console.error(error);
+    }
     setIsLoading(false);
-    setResponse(data);
   };
 
   return (

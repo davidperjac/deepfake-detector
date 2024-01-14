@@ -1,10 +1,11 @@
 import {
   Modal,
-  ModalContent,
-  ModalHeader,
+  Button,
+  Spinner,
   ModalBody,
   ModalFooter,
-  Button,
+  ModalHeader,
+  ModalContent,
 } from '@nextui-org/react';
 import Image from 'next/image';
 
@@ -35,34 +36,43 @@ export default function ResponseModal({
         {(onClose) => (
           <>
             <ModalHeader>Our Prediction</ModalHeader>
-            <ModalBody className="flex flex-row items-center">
-              <Image
-                width={128}
-                height={128}
-                alt="detected-image"
-                className="rounded-md"
-                src={file ? URL.createObjectURL(file) : '/user.png'}
-              />
-              <div className="flex flex-col gap-4">
-                <p>
-                  Filename:
-                  <span> {file?.name}</span>
-                </p>
-                <p>
-                  Prediction:
-                  <span>
-                    {' '}
-                    {getPredictionFromResponse(response?.prediction)}
-                  </span>
-                </p>
-              </div>
+            <ModalBody className="flex flex-row items-center justify-center">
+              {isLoading ? (
+                <Spinner
+                  label="Loading your prediction..."
+                  color="warning"
+                />
+              ) : (
+                <>
+                  <Image
+                    width={128}
+                    height={128}
+                    alt="detected-image"
+                    className="rounded-md"
+                    src={file ? URL.createObjectURL(file) : '/user.png'}
+                  />
+                  <div className="flex flex-col gap-4">
+                    <p>
+                      Filename:
+                      <span> {file?.name}</span>
+                    </p>
+                    <p>
+                      Prediction:
+                      <span>
+                        {' '}
+                        {getPredictionFromResponse(response?.prediction)}
+                      </span>
+                    </p>
+                  </div>
+                </>
+              )}
             </ModalBody>
             <ModalFooter>
               <Button
                 color="warning"
                 onPress={onClose}
               >
-                Predict Again
+                Close
               </Button>
             </ModalFooter>
           </>
