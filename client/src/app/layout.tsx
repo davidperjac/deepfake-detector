@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 
 import './globals.css';
 
@@ -8,10 +7,11 @@ import { Providers } from '@/helpers/providers';
 import Navigation from '@/common/components/navigation';
 import InfoModal from '@/common/components/info-modal';
 
-const inter = Inter({ subsets: ['latin'] });
+import Favicon from '/public/favicon.ico';
 
 export const metadata: Metadata = {
   title: 'Deepfake Detector',
+  icons: [{ rel: 'icon', url: Favicon.src }],
   description:
     'Deepfake detector built with Next.js, NextUI, and TensorFlow.js.',
 };
