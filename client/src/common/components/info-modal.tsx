@@ -28,19 +28,20 @@ export default function InfoModal() {
             </ModalHeader>
             <ModalBody>
               <p>
-                This is a simple deepfake detector built with Next.js, NextUI,
+                This is a simple deepfake detector built with Next.js, FastAPI,
                 and TensorFlow.
               </p>
               <p>
-                The model is trained on the DeepFake-TIMIT dataset, which is a
-                collection of videos of people speaking. The dataset contains
-                both real and fake videos, and the model is trained to
-                differentiate between the two.
+                The model is trained on the OpenForensics dataset from
+                Trung-Nghia, which is a collection of 191,000 photos of 256x256
+                of real and fake faces. The model is trained to detect whether a
+                face is real or fake.
               </p>
               <p>
                 The model is trained with a Convolutional Neural Network (CNN)
-                using TensorFlow.js. The model is then converted to a
-                TensorFlow.js model, and then loaded into the browser.
+                using TensorFlow. This model was trained on Google Colab Pro,
+                downloaded to the FastAPI server, and then used to make
+                predictions. The model is 91.2% accurate on the test set.
               </p>
             </ModalBody>
             <ModalFooter>
@@ -48,7 +49,7 @@ export default function InfoModal() {
                 color="warning"
                 onPress={onClose}
               >
-                Understood!
+                Got It!
               </Button>
             </ModalFooter>
           </>
