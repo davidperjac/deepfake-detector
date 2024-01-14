@@ -1,34 +1,20 @@
 'use client';
 
-import { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from '@nextui-org/react';
-
 import Image from 'next/image';
+import { useState } from 'react';
+import { Button } from '@nextui-org/react';
+
+import { Response } from '@/types/response';
+import ResponseModal from '@/common/components/response-modal';
 import { TrashIcon, UploadIcon, WarningIcon } from '@/common/icons';
+import { useImageDropzone } from '@/hooks/useImageDropzone';
 
 export default function ImageDropzone() {
-  const [file, setFile] = useState<File | undefined>();
-
+  const [response, setResponse] = useState<Response>();
   const [isImageDetected, setIsImageDetected] = useState<boolean>(false);
 
-  const [detectedImage, setDetectedImage] = useState<File>();
-
-  const onDrop = (acceptedFiles: File[]) => {
-    console.log(acceptedFiles);
-    setFile(acceptedFiles[0]);
-  };
-
-  const onRemove = () => {
-    setFile(undefined);
-  };
+  const { file, fileRejectionItems, onRemove, getRootProps, getInputProps } =
+    useImageDropzone();
 
   const handleSubmit = async () => {
     if (!file) return;
@@ -43,60 +29,17 @@ export default function ImageDropzone() {
     }).then((res) => res.json());
 
     setIsImageDetected(true);
-    setDetectedImage(data);
-    console.log(data);
+    setResponse(data);
   };
-
-  const { fileRejections, getRootProps, getInputProps } = useDropzone({
-    accept: {
-      'image/jpeg': ['.jpeg', '.jpg'],
-    },
-    maxSize: 20 * 1000,
-    maxFiles: 1,
-    onDrop,
-  });
-
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => {
-    return (
-      <ul key={file.name}>
-        {errors.map((e) => (
-          <li key={e.code}>{e.message}</li>
-        ))}
-      </ul>
-    );
-  });
 
   return (
     <>
-      <Modal
+      <ResponseModal
+        file={file}
+        response={response}
         isOpen={isImageDetected}
         onOpenChange={() => setIsImageDetected(false)}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                {detectedImage?.file.filename}
-              </ModalHeader>
-              <ModalFooter>
-                <Button
-                  color="danger"
-                  variant="light"
-                  onPress={onClose}
-                >
-                  Close
-                </Button>
-                <Button
-                  color="primary"
-                  onPress={onClose}
-                >
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      />
       <div className="flex gap-12 items-center">
         <div className="flex flex-col gap-4 items-center">
           <section

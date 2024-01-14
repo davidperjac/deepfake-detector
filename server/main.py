@@ -1,12 +1,12 @@
 from typing import Union
 
-from fastapi import FastAPI, Form, File, UploadFile
+from PIL import Image
 from tensorflow.keras.models import load_model
 from fastapi.middleware.cors import CORSMiddleware
-from PIL import Image
+from fastapi import FastAPI, Form, File, UploadFile
 
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
 
 app = FastAPI()
 
@@ -44,4 +44,4 @@ async def detect_deepfake(file: UploadFile = File(...)):
 
   prediction_list = prediction.tolist()
 
-  return { "file": file, "prediction": prediction_list }
+  return { "prediction": prediction_list }
