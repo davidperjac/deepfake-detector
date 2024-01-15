@@ -99,7 +99,12 @@ export default function ImageDropzone() {
             type="submit"
             onClick={handleSubmit}
             variant="solid"
+            style={{
+              opacity: !file ? 0.5 : 1,
+              cursor: !file ? 'not-allowed' : 'pointer',
+            }}
             color="warning"
+            disabled={!file}
           >
             Detect
           </Button>
